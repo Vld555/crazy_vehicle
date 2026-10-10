@@ -13,5 +13,3 @@
 ```bash
 python3 -m unittest discover -v
 ```
-
-До реализации все тесты падают с `NotImplementedError` — это ожидаемо.
