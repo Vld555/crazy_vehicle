@@ -4,7 +4,8 @@
 - `TC-01…TC-39` — модульные тесты (module, SPEC 4.1, паттерн AAA), `tests/test_walking_hut.py`;
 - `TC-40…TC-47` — сценарные тесты (scenario, SPEC 4.2, паттерн GWT, через пилота «Баба Яга»), `tests/test_scenarios.py`;
 - `TC-48…TC-52` — дополнительные модульные тесты по ревью Уханова (SPEC 4.3), `tests/test_review_ukhanov.py`;
-- соотношение module / scenario = 44 / 8 ≈ 85 / 15.
+- `TC-53…TC-55` — дополнительные модульные тесты по ревью Синициной (SPEC 4.4), `tests/test_review_sinitsina.py`;
+- соотношение module / scenario = 47 / 8 ≈ 85 / 15.
 - Имя тест-метода содержит ID (`test_tc07_...`), docstring начинается с ID (`"""TC-07: ..."""`).
 - «Базовая избушка» — `WalkingHut("Избушка", mass_kg=1000.0, leg_length_m=2.0)`: `firewood=100.0`, `pose="standing"`, `facing="forest"`, `healthy_legs=2`, `position_m=0.0`.
 - Предусловие задаётся только через публичный интерфейс: «сидит» = `sit_down()`, «1 нога» = `damage_leg()` ×1, «0 ног» = `damage_leg()` ×2.
@@ -79,3 +80,11 @@
 | TC-50 | module | SPEC 3.4.1–3.4.2, 4.3 | `walk` и `run` с `nan`, `inf`, `-inf`, стоя и сидя | `ValueError` «Расстояние должно быть больше 0.» до проверки позы; снимок неизменен | high |
 | TC-51 | module | SPEC 3.4.8, 4.3 | `add_firewood` с `nan`, `inf`, `-inf`, сидя и стоя | `ValueError` «Количество дров должно быть больше 0.» до проверки позы; снимок неизменен | high |
 | TC-52 | module | SPEC 2, 3.4.3, 3.4.9, 4.3 | `firewood=0`; отдельно `sit_down()` и `damage_leg()` дважды | обе посадки успешны, `pose="sitting"`, дрова и позиция без изменений | medium |
+
+## Дополнения по ревью Синициной от 08.11.2026
+
+| ID | Тип | Требование | Данные и действия | Ожидаемый результат | Приоритет |
+|---|---|---|---|---|---|
+| TC-53 | module | SPEC 3.2–3.3, 4.4 | `WalkingHut("Избушка", 1000, 2, 50)` | числовые атрибуты имеют тип `float`, значения сохранены; `healthy_legs` — `int` | medium |
+| TC-54 | module | SPEC 3.4.2, 4.4 | `firewood=5.0`; снимок; `run(100)` | `HutOutOfFirewood` «Не хватает дров в печи.»; весь снимок неизменен | high |
+| TC-55 | module | SPEC 3.4.6–3.4.7, 4.4 | `firewood=0.0`; `can_step_over("fence")`; `step_over("fence")` | проверка возвращает `True`; действие вызывает `HutOutOfFirewood`; обе операции сохраняют снимок | medium |
