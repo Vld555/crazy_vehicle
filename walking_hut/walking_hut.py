@@ -1,4 +1,4 @@
-"""Ходячая избушка «Бабкин Экспресс» по публичному контракту SPEC 0.2."""
+"""Ходячая избушка «Бабкин Экспресс» по публичному контракту SPEC 0.3."""
 
 import math
 
@@ -136,11 +136,12 @@ class WalkingHut:
         elif self._healthy_legs == 1:
             speed *= 0.5
             cost *= 2
-        self._require_firewood(cost)
+        if not math.isclose(self._firewood, cost, rel_tol=1e-15, abs_tol=0.0):
+            self._require_firewood(cost)
         minutes = distance / speed
         position = self._position_m + distance
         self._position_m = position
-        self._firewood -= cost
+        self._firewood = max(0.0, self._firewood - cost)
         return minutes
 
     def walk(self, distance_m: float) -> float:
